@@ -1,0 +1,1 @@
+APP_KEY=[33mbase64:b1B4lmgS6Pfer3+y3O6OrUqTRXCoxAOCTSz0wo26OTw=[39m
