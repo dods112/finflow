@@ -28,19 +28,25 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage
 RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage
+RUN chmod -R 775 /var/www/html/bootstrap/cache
 
-# Apache config
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Apache virtual host config
 RUN echo '<VirtualHost *:80>\n\
+    ServerAdmin webmaster@localhost\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
+        Options Indexes FollowSymLinks\n\
         AllowOverride All\n\
         Require all granted\n\
     </Directory>\n\
+    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
+    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
-
-RUN a2enmod rewrite
 
 EXPOSE 80
 
-# Run migrations and seeder on startup
-CMD php artisan migrate --force && php artisan db:seed --force && apache2-foreground
+CMD php artisan config:clear && php artisan migrate --force && php artisan db:seed --force && apache2-foreground
