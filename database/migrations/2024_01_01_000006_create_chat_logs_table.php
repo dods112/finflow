@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('message');
             $table->text('response');
-            $table->json('context')->nullable(); // financial context snapshot
+            $table->text('context')->nullable(); // financial context snapshot
             $table->integer('tokens_used')->default(0);
             $table->timestamp('created_at')->useCurrent();
         });

@@ -13,9 +13,17 @@ class ChatLog extends Model
     ];
 
     protected $casts = [
-        'context'    => 'array',
-        'created_at' => 'datetime',
-    ];
+    'context'    => 'array',
+    'created_at' => 'datetime',
+];
+
+protected function context(): \Illuminate\Database\Eloquent\Casts\Attribute
+{
+    return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+        get: fn ($value) => $value ? json_decode($value, true) : null,
+        set: fn ($value) => $value ? json_encode($value) : null,
+    );
+}
 
     public function user()
     {
