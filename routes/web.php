@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
     // Monthly Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
+
 // ── Password Reset ────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
     Route::get('/forgot-password',        [App\Http\Controllers\PasswordResetController::class, 'showForgot'])->name('password.request');
