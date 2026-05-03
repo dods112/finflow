@@ -59,6 +59,11 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
 # =========================
+# RUN DATABASE MIGRATIONS (ADDED THIS)
+# =========================
+RUN php artisan migrate --force
+
+# =========================
 # Render port configuration
 # =========================
 ENV PORT=10000
